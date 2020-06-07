@@ -10,6 +10,7 @@
 		B2123026248CBF2A008777E8 /* AxmlParser.c in Sources */ = {isa = PBXBuildFile; fileRef = B2123024248CBF29008777E8 /* AxmlParser.c */; };
 		B2200858248CA68D00ECB16C /* ProgressIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2200857248CA68D00ECB16C /* ProgressIndicator.swift */; };
 		B237025E248B03CE00930283 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = B237025D248B03CE00930283 /* Constants.swift */; };
+		B23E9949248CCD59001BE3E8 /* adb in CopyFiles */ = {isa = PBXBuildFile; fileRef = B23E9947248CCD52001BE3E8 /* adb */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		B28F69DB248ADF7D00CAAB57 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B28F69DA248ADF7D00CAAB57 /* AppDelegate.swift */; };
 		B28F69DD248ADF7D00CAAB57 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B28F69DC248ADF7D00CAAB57 /* ContentView.swift */; };
 		B28F69DF248ADF7E00CAAB57 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B28F69DE248ADF7E00CAAB57 /* Assets.xcassets */; };
@@ -24,12 +25,26 @@
 		B2EB94CE248B00EE00E01952 /* DeviceList.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2EB94CD248B00EE00E01952 /* DeviceList.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		B23E993F248CCCD1001BE3E8 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 6;
+			files = (
+				B23E9949248CCD59001BE3E8 /* adb in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		B212301C248CB5FA008777E8 /* ApkInstaller-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ApkInstaller-Bridging-Header.h"; sourceTree = "<group>"; };
 		B2123024248CBF29008777E8 /* AxmlParser.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = AxmlParser.c; sourceTree = "<group>"; };
 		B2123025248CBF29008777E8 /* AxmlParser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AxmlParser.h; sourceTree = "<group>"; };
 		B2200857248CA68D00ECB16C /* ProgressIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressIndicator.swift; sourceTree = "<group>"; };
 		B237025D248B03CE00930283 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		B23E9947248CCD52001BE3E8 /* adb */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = adb; sourceTree = "<group>"; };
 		B28F69D7248ADF7D00CAAB57 /* ApkInstaller.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ApkInstaller.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B28F69DA248ADF7D00CAAB57 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B28F69DC248ADF7D00CAAB57 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -67,6 +82,14 @@
 			path = axml;
 			sourceTree = "<group>";
 		};
+		B23E9940248CCCEC001BE3E8 /* platform-tools */ = {
+			isa = PBXGroup;
+			children = (
+				B23E9947248CCD52001BE3E8 /* adb */,
+			);
+			path = "platform-tools";
+			sourceTree = "<group>";
+		};
 		B28F69CE248ADF7D00CAAB57 = {
 			isa = PBXGroup;
 			children = (
@@ -86,6 +109,7 @@
 		B28F69D9248ADF7D00CAAB57 /* ApkInstaller */ = {
 			isa = PBXGroup;
 			children = (
+				B23E9940248CCCEC001BE3E8 /* platform-tools */,
 				B23E993E248CBF82001BE3E8 /* axml */,
 				B28F69DA248ADF7D00CAAB57 /* AppDelegate.swift */,
 				B28F69DC248ADF7D00CAAB57 /* ContentView.swift */,
@@ -123,6 +147,7 @@
 				B28F69D3248ADF7D00CAAB57 /* Sources */,
 				B28F69D4248ADF7D00CAAB57 /* Frameworks */,
 				B28F69D5248ADF7D00CAAB57 /* Resources */,
+				B23E993F248CCCD1001BE3E8 /* CopyFiles */,
 			);
 			buildRules = (
 			);

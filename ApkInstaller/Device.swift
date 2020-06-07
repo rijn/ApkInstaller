@@ -93,10 +93,9 @@ final class DeviceStore: ObservableObject {
 final class DeviceService {
     
     static private func executeAdbCommand(arguments: [String]) -> (output: String, error: String) {
-        let fileManager = FileManager()
         // Decode AXML
         let task = Process()
-        task.executableURL = URL(fileURLWithPath: fileManager.currentDirectoryPath).appendingPathComponent("platform-tools/adb")
+        task.executableURL = Bundle.main.executableURL!.deletingLastPathComponent().appendingPathComponent("adb")
         task.arguments = arguments
         let outputPipe = Pipe()
         let errorPipe = Pipe()
@@ -201,7 +200,7 @@ final class DeviceService {
                             didInstallSucceed = false
                             print("Failed to install", output, error)
                         }
-                    }
+                }
                 
                 DispatchQueue.main.async {
                     DeviceStore.sharedInstance.updateDeviceById(deviceId: selectedDeviceId) {
