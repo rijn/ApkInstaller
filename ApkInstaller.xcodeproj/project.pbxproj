@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B2123026248CBF2A008777E8 /* AxmlParser.c in Sources */ = {isa = PBXBuildFile; fileRef = B2123024248CBF29008777E8 /* AxmlParser.c */; };
 		B2200858248CA68D00ECB16C /* ProgressIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2200857248CA68D00ECB16C /* ProgressIndicator.swift */; };
 		B237025E248B03CE00930283 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = B237025D248B03CE00930283 /* Constants.swift */; };
 		B28F69DB248ADF7D00CAAB57 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B28F69DA248ADF7D00CAAB57 /* AppDelegate.swift */; };
@@ -24,6 +25,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B212301C248CB5FA008777E8 /* ApkInstaller-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ApkInstaller-Bridging-Header.h"; sourceTree = "<group>"; };
+		B2123024248CBF29008777E8 /* AxmlParser.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = AxmlParser.c; sourceTree = "<group>"; };
+		B2123025248CBF29008777E8 /* AxmlParser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AxmlParser.h; sourceTree = "<group>"; };
 		B2200857248CA68D00ECB16C /* ProgressIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressIndicator.swift; sourceTree = "<group>"; };
 		B237025D248B03CE00930283 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		B28F69D7248ADF7D00CAAB57 /* ApkInstaller.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ApkInstaller.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -54,6 +58,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B23E993E248CBF82001BE3E8 /* axml */ = {
+			isa = PBXGroup;
+			children = (
+				B2123024248CBF29008777E8 /* AxmlParser.c */,
+				B2123025248CBF29008777E8 /* AxmlParser.h */,
+			);
+			path = axml;
+			sourceTree = "<group>";
+		};
 		B28F69CE248ADF7D00CAAB57 = {
 			isa = PBXGroup;
 			children = (
@@ -73,6 +86,7 @@
 		B28F69D9248ADF7D00CAAB57 /* ApkInstaller */ = {
 			isa = PBXGroup;
 			children = (
+				B23E993E248CBF82001BE3E8 /* axml */,
 				B28F69DA248ADF7D00CAAB57 /* AppDelegate.swift */,
 				B28F69DC248ADF7D00CAAB57 /* ContentView.swift */,
 				B2EB94CD248B00EE00E01952 /* DeviceList.swift */,
@@ -86,6 +100,7 @@
 				B2EB94CB248B00A700E01952 /* ApkList.swift */,
 				B2200857248CA68D00ECB16C /* ProgressIndicator.swift */,
 				B237025D248B03CE00930283 /* Constants.swift */,
+				B212301C248CB5FA008777E8 /* ApkInstaller-Bridging-Header.h */,
 			);
 			path = ApkInstaller;
 			sourceTree = "<group>";
@@ -179,6 +194,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B2123026248CBF2A008777E8 /* AxmlParser.c in Sources */,
 				B2EB94CE248B00EE00E01952 /* DeviceList.swift in Sources */,
 				B2EB94CC248B00A700E01952 /* ApkList.swift in Sources */,
 				B2EB94C7248AF16800E01952 /* Apk.swift in Sources */,
@@ -334,8 +350,11 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				OTHER_CFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.rijn.ApkInstaller;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_INCLUDE_PATHS = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "ApkInstaller/ApkInstaller-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
@@ -357,8 +376,11 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				OTHER_CFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.rijn.ApkInstaller;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_INCLUDE_PATHS = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "ApkInstaller/ApkInstaller-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Release;

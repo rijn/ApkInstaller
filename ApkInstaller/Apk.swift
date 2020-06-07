@@ -13,6 +13,37 @@ import AppKit
 import ZIPFoundation
 import SWXMLHash
 
+extension String: LocalizedError {
+    public var errorDescription: String? { return self }
+}
+
+extension Data {
+    init(reading input: InputStream) throws {
+        self.init()
+        input.open()
+        defer {
+            input.close()
+        }
+
+        let bufferSize = 1024
+        let buffer = UnsafeMutablePointer<UInt8>.allocate(capacity: bufferSize)
+        defer {
+            buffer.deallocate()
+        }
+        while input.hasBytesAvailable {
+            let read = input.read(buffer, maxLength: bufferSize)
+            if read < 0 {
+                //Stream error occured
+                throw input.streamError!
+            } else if read == 0 {
+                //EOF
+                break
+            }
+            self.append(buffer, count: read)
+        }
+    }
+}
+
 struct Apk: Hashable, Codable, Identifiable {
     var id: String
     
@@ -56,9 +87,11 @@ final class ApkService {
             let destinationURL = fileManager.temporaryDirectory.appendingPathComponent("MilanInstaller")
             
             // Clear temporary folder
-//            do {
-//                try fileManager.removeItem(at: destinationURL)
-//            } catch {}
+            #if !DEBUG
+            do {
+                try fileManager.removeItem(at: destinationURL)
+            } catch {}
+            #endif
             
             // Get list of apks
             let sourceURL = URL(fileURLWithPath: fileManager.currentDirectoryPath).appendingPathComponent("apks")
@@ -78,38 +111,38 @@ final class ApkService {
             } catch {
                 // TODO: Handle exception
             }
-            
-            print("apks", apkFiles)
-            
+
             let apks: [Apk] = apkFiles.map { file in
                 let fileUnzipDirectory = destinationURL.appendingPathComponent(file.lastPathComponent)
-                print("unzip", fileUnzipDirectory)
                 // Unzip APK
-//                do {
-//                    try fileManager.createDirectory(at: fileUnzipDirectory, withIntermediateDirectories: true, attributes: nil)
-//                    try fileManager.unzipItem(at: file, to: fileUnzipDirectory)
-//                } catch {
-//                    print("Extraction of ZIP archive failed with error:\(error)")
-//                }
+                #if !DEBUG
+                do {
+                    try fileManager.createDirectory(at: fileUnzipDirectory, withIntermediateDirectories: true, attributes: nil)
+                    try fileManager.unzipItem(at: file, to: fileUnzipDirectory)
+                } catch {
+                    print("Extraction of ZIP archive failed with error:\(error)")
+                }
+                #endif
                 
                 // Decode AXML
-                let task = Process()
-                task.executableURL = URL(fileURLWithPath: fileManager.currentDirectoryPath).appendingPathComponent("platform-tools/AxmlPrinter")
-                task.arguments = [fileUnzipDirectory.appendingPathComponent("AndroidManifest.xml").path]
-                let outputPipe = Pipe()
-                task.standardOutput = outputPipe
+                var output: String?
                 do {
-                    try task.run()
+                    let data = NSData(contentsOf: fileUnzipDirectory.appendingPathComponent("AndroidManifest.xml"))
+                    if (data == nil) {
+                        throw "Empty AndroidManifest.xml"
+                    }
+                    var outputBuffer: UnsafeMutablePointer<Int8>? = nil
+                    var outputSize: Int = 0
+                    AxmlToXml(&outputBuffer, &outputSize, data?.bytes.assumingMemoryBound(to: Int8.self), data!.length)
+                    let outputData = NSData(bytes: outputBuffer, length: outputSize)
+                    output = String(data: outputData as Data, encoding: .utf8)
                 } catch {
-                    print("Parsing xml failed with error:\(error)")
+                    print("Parsing AXML failed with error: \(error)")
                 }
-                let outputData = outputPipe.fileHandleForReading.readDataToEndOfFile()
-                let output = String(decoding: outputData, as: UTF8.self)
-                
-                print("output", output)
+                guard output != nil else { return nil; }
                 
                 // Parse XML
-                let xml = SWXMLHash.parse(output)
+                let xml = SWXMLHash.parse(output!)
                 
                 guard let package = xml["manifest"].element?.attribute(by: "package")?.text else { return nil; }
                 guard let label = xml["manifest"]["application"].element?.attribute(by: "android:label")?.text else { return nil; }
