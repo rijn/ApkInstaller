@@ -33,9 +33,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         let fileManager = FileManager()
         fileManager.changeCurrentDirectoryPath(Bundle.main.bundleURL.deletingLastPathComponent().path)
         #endif
-        
-        ApkService.refresh()
-        DeviceService.refresh()
     }
 
     func applicationWillTerminate(_ aNotification: Notification) {

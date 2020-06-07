@@ -42,7 +42,9 @@ struct DeviceList: View {
                     }.padding(Constants.paddingAndCorderRadius)
                 }
             }.cornerRadius(Constants.paddingAndCorderRadius)
-        }
+        }.onAppear(perform: {
+            DeviceService.refresh()
+        })
     }
     
     func iconView(deviceInstallState: DeviceInstallState) -> AnyView {

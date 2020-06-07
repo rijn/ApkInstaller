@@ -51,7 +51,9 @@ struct ApkList: View {
                     }
                 }
             }.cornerRadius(Constants.paddingAndCorderRadius)
-        }
+        }.onAppear(perform: {
+            ApkService.refresh()
+        })
     }
 }
 
