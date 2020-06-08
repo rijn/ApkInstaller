@@ -116,31 +116,15 @@ final class DeviceService {
     }
     
     static private func fetchDevices() -> [Device] {
-        var deviceListResult: [String] = executeAdbCommand(arguments: ["devices"]).output
+        var deviceListResult: [String] = executeAdbCommand(arguments: ["devices", "-l"]).output
             .components(separatedBy: "\n")
             .filter { !$0.isEmpty }
         deviceListResult.removeFirst()
         return deviceListResult
-            .map { $0.components(separatedBy: "\t").first ?? "" }
-            .filter { !$0.isEmpty }
-            .map { Device(id: $0, label: nil) }
-    }
-    
-    static private func fetchDeviceInfo(device: Device) -> Device {
-        let deviceInfoResult: [String: String] = executeAdbCommand(arguments: ["-s", device.id, "shell", "getprop"]).output
-            .components(separatedBy: "\n")
-            .filter { !$0.isEmpty }
-            .reduce(into: [String: String]()) {
-                let matches = $1.matchingStrings(regex: "\\[([^\\]]*)\\]")
-                if let key = matches[safe: 0]?[safe: 1],
-                    let value = matches[safe: 1]?[safe: 1] {
-                    $0[key] = value
-                }
-                
+            .map {
+                let components = $0.components(separatedBy: " ").filter { !$0.isEmpty }
+                return Device(id: components.first!, label: components.first(where: { $0.contains("product:") })?.components(separatedBy: ":").last)
         }
-        var newDevice = device
-        newDevice.label = deviceInfoResult["ro.product.name"]
-        return newDevice
     }
     
     static func refresh() {
@@ -148,7 +132,7 @@ final class DeviceService {
         DeviceStore.sharedInstance.startLoad()
         
         DispatchQueue.global(qos: .background).async {
-            let devices = fetchDevices().map(fetchDeviceInfo)
+            let devices = fetchDevices()
             
             DispatchQueue.main.async {
                 DeviceStore.sharedInstance.submit(newDevices: devices)
